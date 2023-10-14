@@ -1,7 +1,5 @@
 import telebot
 from telebot import types
-import logging
-from aiogram.types import ChatActions
 
 bot = telebot.TeleBot('5864236311:AAEwGXU0uyvxuiei2FSDiijtb8b2B9PTZpI')
 
@@ -15,29 +13,32 @@ age = 0
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("👋 Поздороваться")
-    btn2 = types.KeyboardButton("❓ Задать вопрос")
-    markup.add(btn1, btn2)
+    #btn1 = types.KeyboardButton("👋 Поздороваться")
+    #btn2 = types.KeyboardButton("❓ Задать вопрос")
+    #markup.add(btn1, btn2)
     bot.send_message(message.chat.id,
                      text="Привет, {0.first_name}! Я буду подменять Женю, пока он занят работой и не будет на связи. Если тебе станет скучно, ты всегда можешь поболтать со мной!".format(
                          message.from_user), reply_markup=markup)
+    bot.send_message(message.from_user.id, "Пока я могу отвечать на довольно простые вопросы по типу: 'когда ты приедешь?' или фразы 'я тебя люблю' и 'я скучаю'\nНо со временем я буду обновлятья")
 
 
 @bot.message_handler(content_types=['text'])
 def love(message):
     love = ['я тебя люблю', 'люблю тебя', 'люблю', 'я тебя люблю❤️', 'люблю тебя❤️', 'люблю❤️']
     come = ['когда ты приедешь?', 'скоро ты приедешь?', 'когда тебя ждать в гости?', 'когда тебя ждать?', 'ты скоро приедешь?', 'приезжай в гости', 'приезжай ко мне']
-    logging.info(message.text)
+    sadness = ['я очень скучаю', 'я скучаю', 'не могу без тебя', 'безумно скучаю', 'я очень скучаю❤️', 'я скучаю❤️', 'не могу без тебя❤️', 'безумно скучаю❤️']
     print(message.text)
     string = message.text.lower()
     if string in love:
-        bot.send_chat_action(message.chat.id, ChatActions.TYPING)
         bot.send_message(message.from_user.id, "и я тебя люблю, малышка❤️")
         #bot.register_next_step_handler(message, get_name)  # следующий шаг – функция get_name
 
     elif string in come:
-        bot.send_chat_action(message.chat.id, ChatActions.TYPING)
         bot.send_message(message.from_user.id, "я скоро приеду, дорогая \nно пока не знаю когда")
+    elif string in sadness:
+        bot.send_message(message.from_user.id, "если б ты знала, как я скучаю....❤️❤️❤️")
+    elif string == "что делаешь?" or "что делаешь":
+        bot.send_message(message.from_user.id, "я работаю, малышка\nпотому и создал этого бота для тебя")
     else:
         bot.send_message(message.from_user.id, 'Напиши /reg')
 
