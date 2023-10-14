@@ -1,7 +1,6 @@
 import telebot
 from telebot import types
 import logging
-import asyncio
 from aiogram.types import ChatActions
 
 bot = telebot.TeleBot('5864236311:AAEwGXU0uyvxuiei2FSDiijtb8b2B9PTZpI')
